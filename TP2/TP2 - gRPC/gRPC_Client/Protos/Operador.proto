@@ -1,0 +1,155 @@
+syntax = "proto3";
+
+option csharp_namespace = "GrpcServer";
+
+service Operador{
+	rpc LoginUser (LoginUserModel) returns (ResponseLoginUser);
+	rpc CreateUser (CreateUserModel) returns (ResponseCreateUser);
+	rpc RemoveUser(RemoveUserRequest) returns (ResponseRemoveUser);
+    rpc EditUser (EditUserRequest) returns (ResponseEditUser);
+    rpc CheckUser (CheckUserRequest) returns (CheckUserResponse);
+
+	rpc reservationProc (reservationProcess) returns (reservationProcessResponse);
+	rpc activation (activationProcess) returns (activationProcessResponse);
+	rpc deactivation (deactivationProcess) returns (deactivationProcessResponse);
+	rpc termination (terminationProcess) returns (terminationProcessResponse); 
+	rpc publishUpdt (ActionsProcess) returns (ActionsProcessResponse);
+	rpc Listing  (ListingProcess) returns (stream ListingProcessModel);
+	rpc CSV (CSVProcess) returns (ProcessCSVResponse); 
+	rpc ListingActive (ListingProcess) returns (stream ListingProcessModel);
+}
+
+
+message LoginUserModel{
+	string username = 1;
+	string password = 2;
+}
+
+message ResponseLoginUser{
+	string response = 1;
+	bool userFlag = 2;
+	bool result = 3;
+}
+message CreateUserModel{
+	string username = 1;
+	string password = 2;
+	bool type = 3; 
+}
+
+message ResponseCreateUser{
+		string response = 1;
+}
+
+message RemoveUserRequest {
+  string username = 1;
+}
+
+message ResponseRemoveUser{
+string response = 1;
+}
+
+message EditUserRequest {
+    string username = 1;
+    string new_password = 2;
+    bool is_admin = 3;
+}
+
+message ResponseEditUser {
+    string response = 1;
+}
+
+message CheckUserRequest {
+  string username = 1;
+}
+
+message CheckUserResponse {
+  bool exists = 1;
+}
+
+message reservationProcess{
+	string username = 1;
+	string houseAddress = 2;
+	string houseCity = 3;
+	int32 upstream = 4;
+	int32 downstream = 5;
+}
+
+message reservationProcessResponse{
+	bool hasbeenReserved = 1;
+	int32 uniqueID = 2;
+	bool success = 3;
+	string errorLog = 4;
+}
+
+message activationProcess{
+	int32 uniqueID = 1;
+	string username = 2;
+}
+
+message activationProcessResponse{
+	string response = 1;
+	bool success = 2;
+}
+
+message deactivationProcess{
+	int32 uniqueID = 1;
+	string username = 2;
+}
+
+message deactivationProcessResponse{
+	string response = 1;
+	bool success = 2;
+}
+
+message terminationProcess{
+  int32 uniqueID = 1;
+  string username = 2;
+}
+
+message terminationProcessResponse{
+  string response = 1;
+  bool success = 2;
+}
+
+message ActionsProcess{
+	int32 Id = 1;
+	bool isSub = 2;
+	string type = 3;
+}
+
+message ActionsProcessResponse{
+	string errorLog = 1;
+}
+
+message ListingProcess{
+
+}
+
+message ListingProcessModel{
+	int32 id_Unico = 1;
+	string operadora = 2;
+	string morada = 3;
+	string municipio = 4;
+	bool owner = 5;
+	string state = 6;
+	string operador = 7;
+	int32 downstream = 8;
+	int32 upstream = 9;
+}
+
+message CSVProcess {
+
+	string username = 1;
+	string operadora = 2;
+	string morada = 3;
+	string municipio = 4;
+	bool owner = 5;
+	int32 downstream = 8;
+	int32 upstream = 9;
+
+}
+
+message ProcessCSVResponse {
+  string response = 1;
+
+}

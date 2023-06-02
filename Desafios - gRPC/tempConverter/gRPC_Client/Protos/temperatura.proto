@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+option csharp_namespace = "GrpcService1";
+
+package temperature;
+
+service TemperatureConverter {
+  rpc ConvertToFahrenheit (TemperatureRequest) returns (TemperatureResponse) {}
+}
+
+message TemperatureRequest {
+  float celsius = 1;
+}
+
+message TemperatureResponse {
+  float fahrenheit = 1;
+}
+
